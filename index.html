@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="src/css/andres.css">
+    <link rel="stylesheet" type="text/css" href="src/components/andresPlayer/andresPlayer.css">
+    <link rel="stylesheet" type="text/css" href="src/components/video-list/video-list.css">
+    <script src="videos-data.js"></script>
+    <script src="src/lib/spatial-navigator.js"></script>
+    <script src="src/components/andresPlayer/andresPlayer.js"></script>
+    <script src="src/components/andresPlayer/timeLine.js"></script>
+    <script src="src/components/video-list/video-list.js"></script>
+    <script src="src/TizenTVKeyValue.js"></script>
+    <script src="src/app.js"></script>
+    <script src="$WEBAPIS/webapis/webapis.js"></script>
+</head>
+
+<body onkeydown="okd()" onkeypress="okp();Main.keyDown('body')" onkeyup="oku()" onload="Main.onLoad();"
+    onunload="Main.onUnload();" onclick="App.onClick( null, 'body' )">
+    <div class="video-data-display">
+        App started: <span id="start-time">-</span><br>
+        buffering: <span id="buffering">-</span><br>
+        duration: <span id="duration-ms">-</span> ms.<br>
+        duration: <span id="duration-min">-</span> min.<br>
+        elapsed: <span id="current-time-ms">-</span> ms.<br>
+        <span id="remaining-time-percentage">%</span><br>
+        remaining: <span id="remaining-time-ms">-</span> ms.<br>
+    </div>
+    </div>
+    <object id="av-player" type="application/avplayer"
+        style="position:absolute; left:0px; top:0px; width: 500px; height: 500px; zindex:999"></object>
+    <div id="av-player-controls" class="av-player-controls">
+
+        <div id="player-timeline">
+            <div id="total-time">
+                <div id="time-line" class="current-time"></div>
+                <ul id="timeline-adds">
+                </ul>
+            </div>
+            <div class="time"></div>
+        </div>
+
+        <div id="player-controls">
+            <div class="ply-btn play" onclick="andresPlayer.ply_mouse_action('play')">Play</div>
+            <div class="ply-btn stop" onclick="andresPlayer.ply_mouse_action('stop')">Stop</div>
+            <div class="ply-btn pause" onclick="andresPlayer.ply_mouse_action('pause')">Pause</div>
+            <div class="ply-btn forward" onclick="andresPlayer.ply_mouse_action('forward')">Forward</div>
+            <div class="ply-btn back" onclick="andresPlayer.ply_mouse_action('back')">Back</div>
+        </div>
+    </div>
+    <div class="video-list">
+        <ul id="video-list-content"></ul>
+        <div id="arrow-up" class="scroll-arrow arrow-up" onclick="videoList.arrowClick('UP')"></div>
+        <div id="arrow-down" class="scroll-arrow arrow-down" onclick="videoList.arrowClick('DOWN')"></div>
+    </div>
+    <script src="src/purple-console.js"></script>
+    <script>
+        ajsrConsole.filterJSErrors();
+        ajsrConsole.setMaxObjLength(100);
+        ajsrConsole.setLogAlias("debug");
+        ajsrConsole.setBgColor("rgba(0,0,150,1)");
+        ajsrConsole.setBorderColor("rgba(0,255,255,1)");
+        ajsrConsole.setTextColor("rgba(255,255,255,1)");
+        //ajsrConsole.toggleOpacity();
+        ajsrConsole.printTime();
+        ajsrConsole.printTime(false);
+        ajsrConsole.move("DOWN");
+        ajsrConsole.move("RIGHT");
+        ajsrConsole.useColors();
+        ajsrConsole.printTime();
+        ajsrConsole.useColors(false);
+        ajsrConsole.setSize(700, 900);
+        ajsrConsole.fontSize(16);
+    </script>
+</body>
+
+</html>
