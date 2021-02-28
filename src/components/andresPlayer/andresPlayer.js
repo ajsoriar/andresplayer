@@ -8,6 +8,7 @@ var andresPlayer = {
 };
 
 var currentVideo = {
+    url: null,
     duration: 0,
     currentTime: 0,
     seconds: 0,
@@ -112,13 +113,13 @@ var getMinFromMs = function (ms) {
 };
 
 andresPlayer.loadAndPlay = function (videoUrl) {
+    if (videoUrl) currentVideo.url = videoUrl
     debug("andresPlayer.loadAndPlay() videoUrl:" + videoUrl);
-    debug("!!!!!!! playStuff!! ");
     try {
         webapis.avplay.stop();
         debug("webapis.avplay:", webapis.avplay);
         //webapis.avplay.setStreamingProperty("SET_MODE_4K") //for 4K contents			
-        webapis.avplay.open(videoUrl);
+        webapis.avplay.open(currentVideo.url);
         webapis.avplay.setDisplayRect(andresPlayer.x, andresPlayer.y, 600, 250); //call this method after open() - To be called in these states - "IDLE", "PAUSE"
         webapis.avplay.prepare();
         currentVideo.duration = webapis.avplay.getDuration();
@@ -140,12 +141,23 @@ andresPlayer.ply_mouse_action = function (option, data) {
     switch (option) {
 
         case 'play':
-            webapis.avplay.play();
-            //webapis.avplay.resume()
+            var currentPlayerState = webapis.avplay.getState(); //  "NONE", "IDLE", "READY", "PLAYING", "PAUSED".
+            debug("webapis.avplay.getState() is: " + currentPlayerState);
+            if (currentPlayerState === "PLAYING") {
+                webapis.avplay.pause();
+            } else if(currentPlayerState === "PAUSED"){
+                webapis.avplay.play();
+            } else {
+                andresPlayer.loadAndPlay();
+            }
             break;
 
         case 'stop':
-            webapis.avplay.stop();
+            try {
+                webapis.avplay.stop();
+            } catch (e) {
+                ajsrConsole.error(e);
+            }
             break;
 
         case 'pause':
@@ -154,12 +166,12 @@ andresPlayer.ply_mouse_action = function (option, data) {
 
         case 'forward':
             //webapis.avplay.jumpForward(currentVideo.currentTime + 10000, function () { })
-            webapis.avplay.jumpForward(10);
+            webapis.avplay.jumpForward(15);
             break;
 
         case 'back':
             //webapis.avplay.jumpBackward(currentVideo.currentTime - 10000, function () { });
-            webapis.avplay.jumpBackward(10);
+            webapis.avplay.jumpBackward(15);
             break;
 
         case 'seek':
