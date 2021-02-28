@@ -81,35 +81,33 @@ Main.onLoad = function() { // called from BODY tag on init.
     });
 }
 
-Main.keyDown = function ( elementAlias ) {
+Main.keyDown = function ( event ) {
 
-    //debug("Main Key code elementAlias: " + elementAlias);
     var keyCode = event.keyCode;
     debug("Main Key code : " + keyCode);
 
-    if( keyCode == 49 && elementAlias == "body" ){ // key number '1';
-
-    }
-
     switch (keyCode) {
         case 37:
-
+            nav.move.left();
             break;
 
         case 39:
-
+            nav.move.right();
             break;
 
         case 38:
-
+            nav.move.up();
             break;
 
         case 40:
-
+            nav.move.down();
             break;
 
+        case 13:
+            //nav.action();
+            break;
         case tvKey.KEY_ENTER: // Code for Enter key event
-            
+
             break;
 
         case 10009: // tvKey.KEY_RETURN:
@@ -139,12 +137,10 @@ Main.keyDown = function ( elementAlias ) {
 
             break;
     }
-
-    //debug("event: "+ event );
 };
 
-var okp = function(){
-    debug("KeyHandler on onkeypress");
+var okd = function(){
+    debug("KeyHandler on onkeydown");
 };
 
 var oku = function(){
@@ -154,5 +150,5 @@ var oku = function(){
 Main.onUnload = function() {};
 
 App.onClick = function( t ) {
-    //debug( "App.onClick! x:" + event.clientX + ", y:" + event.clientY , "YELLOW" );
+    debug( "App.onClick! x:" + event.clientX + ", y:" + event.clientY , "YELLOW" );
 };

@@ -24,11 +24,15 @@
             left: 0;
             right: unset !important;
         }
+
+        .focused {
+            outline: 1px solid cyan;
+            box-shadow: 0 0 10px 5px cyan;
+        }
     </style>
 </head>
 
-<body onkeydown="okd()" onkeypress="okp();Main.keyDown('body')" onkeyup="oku()" onload="Main.onLoad();"
-    onunload="Main.onUnload();" onclick="App.onClick( null, 'body' )">
+<body>
     <div class="video-data-display">
         App started: <span id="start-time">-</span><br>
         buffering: <span id="buffering">-</span><br>
@@ -53,11 +57,11 @@
         </div>
 
         <div id="player-controls">
-            <div class="ply-btn play" onclick="andresPlayer.ply_mouse_action('play')">Play</div>
-            <div class="ply-btn stop" onclick="andresPlayer.ply_mouse_action('stop')">Stop</div>
-            <div class="ply-btn pause" onclick="andresPlayer.ply_mouse_action('pause')">Pause</div>
-            <div class="ply-btn forward" onclick="andresPlayer.ply_mouse_action('forward')">Forward</div>
-            <div class="ply-btn back" onclick="andresPlayer.ply_mouse_action('back')">Back</div>
+            <div class="focusable ply-btn play" onclick="andresPlayer.ply_mouse_action('play')">Play</div>
+            <div class="focusable ply-btn stop" onclick="andresPlayer.ply_mouse_action('stop')">Stop</div>
+            <div class="focusable ply-btn pause" onclick="andresPlayer.ply_mouse_action('pause')">Pause</div>
+            <div class="focusable ply-btn forward" onclick="andresPlayer.ply_mouse_action('forward')">Forward</div>
+            <div class="focusable ply-btn back" onclick="andresPlayer.ply_mouse_action('back')">Back</div>
         </div>
     </div>
     <div class="video-list">
@@ -85,26 +89,38 @@
         ajsrConsole.setSize(700, 900);
         ajsrConsole.fontSize(16);
     </script>
+    <script>
+        document.addEventListener( 'keyup', function(e) {
+            oku();
+        });
+        document.addEventListener( 'keydown', function(e){
+            okd();
+            Main.keyDown (e);
+        });
+        // document.addEventListener( 'click', function(e){
+        //     App.onClick();
+        // });
+    </script>
         <script>
 
-            var el = document.getElementById("result");
             EasterEggs.show();
     
             EasterEggs.addSequence(null,[49,50],function(){ // 1, 2
                 debug("MATCH!!! 1,2");
-                el.innerHTML = "<b>Match found!</b>";
             })
     
             EasterEggs.printList();
-    
+
             EasterEggs.onKeyDown(function( match ){
                 if ( match ) console.log("YES!"); else {
                     console.log("NO!");
-                    el.innerHTML = "-";
                 }
             })
     
         </script>
+    <script>
+        nav.reset();
+    </script>
 </body>
 
 </html>
